@@ -1,4 +1,4 @@
-export class MealTicketSummaryView {
+export class MealTicketPerMonthSummaryView {
   constructor(
     public readonly month: number,
     public readonly base: number,

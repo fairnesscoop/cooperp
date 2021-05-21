@@ -6,7 +6,7 @@ import { IDateUtils } from 'src/Application/IDateUtils';
 import { AvailableMealTicketStrategy } from 'src/Domain/HumanResource/MealTicket/Strategy/AvailableMealTicketStrategy';
 import { MealTicketGroupedByMonthSummary } from 'src/Domain/HumanResource/MealTicket/Strategy/MealTicketGroupedByMonthSummary';
 import { MealTicketRemovalSummaryDTO } from 'src/Infrastructure/HumanResource/MealTicket/DTO/MealTicketRemovalSummaryDTO';
-import { MealTicketSummaryView } from '../Views/MealTicketSummaryView';
+import { MealTicketPerMonthSummaryView } from '../Views/MealTicketSummaryView';
 
 @QueryHandler(CountMealTicketPerMonthQuery)
 export class CountMealTicketPerMonthQueryHandler {
@@ -20,7 +20,7 @@ export class CountMealTicketPerMonthQueryHandler {
   private buildMealTicketSummary = (
     mealTicketRemovals: MealTicketRemovalSummaryDTO[],
     mealTicketGroupedByMonthSummaries: MealTicketGroupedByMonthSummary[]
-  ): MealTicketSummaryView[] => {
+  ): MealTicketPerMonthSummaryView[] => {
     return mealTicketGroupedByMonthSummaries.map(summary => {
       const month = summary.month;
       const base = summary.mealTicketCount;
@@ -33,7 +33,7 @@ export class CountMealTicketPerMonthQueryHandler {
       if (foundTicketRemoval) {
         total = total - foundTicketRemoval.count;
       }
-      return new MealTicketSummaryView(
+      return new MealTicketPerMonthSummaryView(
         month,
         base,
         foundTicketRemoval ? foundTicketRemoval.count : 0,
@@ -44,7 +44,7 @@ export class CountMealTicketPerMonthQueryHandler {
 
   public async execute(
     command: CountMealTicketPerMonthQuery
-  ): Promise<MealTicketSummaryView[]> {
+  ): Promise<MealTicketPerMonthSummaryView[]> {
     const { user, currentDate } = command;
     const workingDaysByMonth = this.dateUtils.getAllWorkingDayOfYearByMonth(
       currentDate

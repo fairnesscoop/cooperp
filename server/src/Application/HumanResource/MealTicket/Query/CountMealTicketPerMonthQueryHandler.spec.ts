@@ -6,7 +6,7 @@ import { CountMealTicketPerMonthQuery } from './CountMealTicketPerMonthQuery';
 import { DateUtilsAdapter } from 'src/Infrastructure/Adapter/DateUtilsAdapter';
 import { MealTicketRemoval } from 'src/Domain/HumanResource/MealTicket/MealTicketRemoval.entity';
 import { WorkingDayOfYearByMonth } from 'src/Domain/HumanResource/MealTicket/Strategy/WorkingDayOfYearByMonth';
-import { MealTicketSummaryView } from '../Views/MealTicketSummaryView';
+import { MealTicketPerMonthSummaryView } from '../Views/MealTicketSummaryView';
 import { MealTicketRemovalSummaryDTO } from 'src/Infrastructure/HumanResource/MealTicket/DTO/MealTicketRemovalSummaryDTO';
 
 describe('CountMealTicketPerMonthQueryHandler', () => {
@@ -47,10 +47,10 @@ describe('CountMealTicketPerMonthQueryHandler', () => {
       }
     ];
 
-    const expectedResult: MealTicketSummaryView[] = [
-      new MealTicketSummaryView(1, 20, 0, 20),
-      new MealTicketSummaryView(2, 21, 0, 21),
-      new MealTicketSummaryView(3, 23, 2, 21)
+    const expectedResult: MealTicketPerMonthSummaryView[] = [
+      new MealTicketPerMonthSummaryView(1, 20, 0, 20),
+      new MealTicketPerMonthSummaryView(2, 21, 0, 21),
+      new MealTicketPerMonthSummaryView(3, 23, 2, 21)
     ];
 
     const ticketRemoval1 = mock(MealTicketRemoval);
@@ -107,10 +107,10 @@ describe('CountMealTicketPerMonthQueryHandler', () => {
       }
     ];
 
-    const expectedResult: MealTicketSummaryView[] = [
-      new MealTicketSummaryView(1, 20, 1, 19),
-      new MealTicketSummaryView(2, 21, 2, 19),
-      new MealTicketSummaryView(3, 23, 6, 17)
+    const expectedResult: MealTicketPerMonthSummaryView[] = [
+      new MealTicketPerMonthSummaryView(1, 20, 1, 19),
+      new MealTicketPerMonthSummaryView(2, 21, 2, 19),
+      new MealTicketPerMonthSummaryView(3, 23, 6, 17)
     ];
 
     const ticketRemoval1 = mock(MealTicketRemoval);
