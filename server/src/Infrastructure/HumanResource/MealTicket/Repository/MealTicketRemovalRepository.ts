@@ -59,7 +59,11 @@ export class MealTicketRemovalRepository
   ): Promise<MealTicketRemovalView | undefined> {
     return this.repository
       .createQueryBuilder('mealTicketRemoval')
-      .select(['mealTicketRemoval.id', 'mealTicketRemoval.date'])
+      .select([
+        'mealTicketRemoval.id',
+        'mealTicketRemoval.date',
+        'mealTicketRemoval.userId'
+      ])
       .where('mealTicketRemoval.date = :date', { date })
       .getRawOne();
   }

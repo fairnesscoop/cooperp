@@ -104,10 +104,12 @@ describe('GetEventByIdQueryHandler', () => {
     );
     const date = '2019-12-12';
     const mealTicketRemovalId = 666;
+    const userId = 777;
 
     const mealTicketRemovalView = new MealTicketRemovalView(
       date,
-      mealTicketRemovalId
+      mealTicketRemovalId,
+      userId
     );
     const expectedResult = new EventView(
       'eb9e1d9b-dce2-48a9-b64f-f0872f3157d2',
