@@ -8,7 +8,8 @@ describe('DeleteMealTicketRemovalHandler', () => {
   let handler: DeleteMealTicketRemovalCommandHandler;
 
   const id = 666;
-  const command = new DeleteMealTicketRemovalCommand(id);
+  const userId = 777;
+  const command = new DeleteMealTicketRemovalCommand(id, userId);
 
   beforeEach(() => {
     mealTicketRemovalRepository = mock(MealTicketRemovalRepository);
@@ -19,10 +20,10 @@ describe('DeleteMealTicketRemovalHandler', () => {
   });
 
   it('should delete a meal ticket removal handler', async () => {
-    when(mealTicketRemovalRepository.deleteOne(id)).thenResolve(null);
+    when(mealTicketRemovalRepository.deleteOne(id, userId)).thenResolve(null);
 
     await handler.execute(command);
 
-    verify(mealTicketRemovalRepository.deleteOne(id)).once();
+    verify(mealTicketRemovalRepository.deleteOne(id, userId)).once();
   });
 });
