@@ -64,7 +64,10 @@ describe('CountMealTicketPerMonthQueryHandler', () => {
     ]);
 
     when(
-      mealTicketRemovalRepository.getAllByUserGroupedByMonth(instance(user), now)
+      mealTicketRemovalRepository.getAllByUserGroupedByMonth(
+        instance(user),
+        now
+      )
     ).thenResolve(mealTicketsExceptions);
 
     expect(await handler.execute(command)).toStrictEqual(expectedResult);
@@ -121,7 +124,10 @@ describe('CountMealTicketPerMonthQueryHandler', () => {
     ]);
 
     when(
-      mealTicketRemovalRepository.getAllByUserGroupedByMonth(instance(user), now)
+      mealTicketRemovalRepository.getAllByUserGroupedByMonth(
+        instance(user),
+        now
+      )
     ).thenResolve(mealTicketsExceptions);
 
     expect(await handler.execute(command)).toStrictEqual(expectedResult);

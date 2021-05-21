@@ -15,7 +15,7 @@ export class CountMealTicketPerMonthQueryHandler {
     private readonly dateUtils: IDateUtils,
     @Inject('IMealTicketRemovalRepository')
     private readonly mealTicketRemovalRepository: IMealTicketRemovalRepository
-  ) { }
+  ) {}
 
   private buildMealTicketSummary = (
     mealTicketRemovals: MealTicketRemovalSummaryDTO[],
@@ -57,7 +57,6 @@ export class CountMealTicketPerMonthQueryHandler {
       user,
       currentDate
     );
-
 
     return this.buildMealTicketSummary(
       mealTicketRemovals,

@@ -8,6 +8,7 @@ export class EventView {
     public readonly time: number,
     public readonly billable: boolean,
     public readonly date: string,
+    public readonly canReceiveMealTicket: boolean,
     public readonly summary?: string,
     public readonly project?: ProjectView,
     public readonly task?: TaskView

@@ -6,22 +6,30 @@ import { EventView } from '../View/EventView';
 import { EventNotFoundException } from 'src/Domain/FairCalendar/Exception/EventNotFoundException';
 import { ProjectView } from 'src/Application/Project/View/ProjectView';
 import { TaskView } from 'src/Application/Task/View/TaskView';
+import { IMealTicketRemovalRepository } from 'src/Domain/HumanResource/MealTicket/Repository/IMealTicketRemovalRepository';
 
 @QueryHandler(GetEventByIdQuery)
 export class GetEventByIdQueryHandler {
   constructor(
     @Inject('IEventRepository')
-    private readonly eventRepository: IEventRepository
+    private readonly eventRepository: IEventRepository,
+    @Inject('IMealTicketRemovalRepository')
+    private readonly mealTicketRepository: IMealTicketRemovalRepository
   ) {}
 
   public async execute(query: GetEventByIdQuery): Promise<EventView> {
     const event = await this.eventRepository.findOneById(query.id);
+
     if (!event) {
       throw new EventNotFoundException();
     }
 
     const project = event.getProject();
     const task = event.getTask();
+    const date = event.getDate();
+
+    const hasMealExceptionForThisEvent =
+      (await this.mealTicketRepository.getCountByDate(date)) > 0;
 
     return new EventView(
       event.getId(),
@@ -29,6 +37,7 @@ export class GetEventByIdQueryHandler {
       event.getTime(),
       event.isBillable(),
       event.getDate(),
+      hasMealExceptionForThisEvent,
       event.getSummary(),
       project ? new ProjectView(project.getId(), project.getName()) : null,
       task ? new TaskView(task.getId(), task.getName()) : null

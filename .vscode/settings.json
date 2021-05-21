@@ -6,6 +6,10 @@
 		"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 		"editor.formatOnSave": true
 	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
 	"eslint.format.enable": true,
 	"eslint.lintTask.enable": true,
 	"eslint.workingDirectories": [

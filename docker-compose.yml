@@ -14,6 +14,8 @@ services:
       POSTGRES_DB: permacoop
       PGUSER: docker
       PGPASSWORD: docker
+    ports :
+      - 15432:5432
     volumes:
       - 'database:/var/lib/postgresql/data'
 
@@ -42,7 +44,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - 80:80
+      - 81:80
     depends_on:
       - 'client'
       - 'api'
