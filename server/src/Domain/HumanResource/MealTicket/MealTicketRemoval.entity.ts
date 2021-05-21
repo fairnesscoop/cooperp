@@ -1,7 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  Unique
+} from 'typeorm';
 import { User } from '../User/User.entity';
 
 @Entity()
+@Unique(['date', 'user'])
 export class MealTicketRemoval {
   @PrimaryGeneratedColumn('uuid')
   private id: string;
