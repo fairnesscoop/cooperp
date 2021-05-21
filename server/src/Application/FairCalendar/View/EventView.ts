@@ -1,5 +1,6 @@
 import { ProjectView } from 'src/Application/Project/View/ProjectView';
 import { TaskView } from 'src/Application/Task/View/TaskView';
+import { MealTicketRemovalView } from 'src/Application/HumanResource/MealTicket/Views/MealTicketRemovalView';
 
 export class EventView {
   constructor(
@@ -8,9 +9,9 @@ export class EventView {
     public readonly time: number,
     public readonly billable: boolean,
     public readonly date: string,
-    public readonly canReceiveMealTicket: boolean,
     public readonly summary?: string,
     public readonly project?: ProjectView,
-    public readonly task?: TaskView
+    public readonly task?: TaskView,
+    public readonly mealTicketRemoval?: MealTicketRemovalView
   ) {}
 }

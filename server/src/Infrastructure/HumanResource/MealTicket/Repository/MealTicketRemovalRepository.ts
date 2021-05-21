@@ -1,9 +1,10 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { MealTicketRemoval } from 'src/Domain/HumanResource/MealTicket/MealTicketRemoval.entity';
 import { IMealTicketRemovalRepository } from 'src/Domain/HumanResource/MealTicket/Repository/IMealTicketRemovalRepository';
 import { User } from 'src/Domain/HumanResource/User/User.entity';
 import { MealTicketRemovalSummaryDTO } from '../DTO/MealTicketRemovalSummaryDTO';
+import { MealTicketRemovalView } from 'src/Application/HumanResource/MealTicket/Views/MealTicketRemovalView';
 
 export class MealTicketRemovalRepository
   implements IMealTicketRemovalRepository {
@@ -53,11 +54,21 @@ export class MealTicketRemovalRepository
       .getRawMany();
   }
 
-  public getCountByDate(date: string): Promise<number> {
+  public getOneByDate(
+    date: string
+  ): Promise<MealTicketRemovalView | undefined> {
     return this.repository
       .createQueryBuilder('mealTicketRemoval')
-      .select(['mealTicketRemoval.id'])
+      .select(['mealTicketRemoval.id', 'mealTicketRemoval.date'])
       .where('mealTicketRemoval.date = :date', { date })
-      .getCount();
+      .getRawOne();
+  }
+
+  public async deleteOne(id: number): Promise<void> {
+    await this.repository
+      .createQueryBuilder('mealTicketRemoval')
+      .delete()
+      .where('mealTicketRemoval.id = :id', { id })
+      .execute();
   }
 }

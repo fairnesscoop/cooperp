@@ -28,8 +28,9 @@ export class GetEventByIdQueryHandler {
     const task = event.getTask();
     const date = event.getDate();
 
-    const hasMealExceptionForThisEvent =
-      (await this.mealTicketRepository.getCountByDate(date)) > 0;
+    const meatTicketRemovalView = await this.mealTicketRepository.getOneByDate(
+      date
+    );
 
     return new EventView(
       event.getId(),
@@ -37,10 +38,10 @@ export class GetEventByIdQueryHandler {
       event.getTime(),
       event.isBillable(),
       event.getDate(),
-      hasMealExceptionForThisEvent,
       event.getSummary(),
       project ? new ProjectView(project.getId(), project.getName()) : null,
-      task ? new TaskView(task.getId(), task.getName()) : null
+      task ? new TaskView(task.getId(), task.getName()) : null,
+      meatTicketRemovalView
     );
   }
 }

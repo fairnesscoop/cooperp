@@ -11,6 +11,7 @@ import { ProjectView } from 'src/Application/Project/View/ProjectView';
 import { TaskView } from 'src/Application/Task/View/TaskView';
 import { MealTicketRemovalRepository } from 'src/Infrastructure/HumanResource/MealTicket/Repository/MealTicketRemovalRepository';
 import { MealTicketRemoval } from 'src/Domain/HumanResource/MealTicket/MealTicketRemoval.entity';
+import { MealTicketRemovalView } from 'src/Application/HumanResource/MealTicket/Views/MealTicketRemovalView';
 
 describe('GetEventByIdQueryHandler', () => {
   const query = new GetEventByIdQuery('eb9e1d9b-dce2-48a9-b64f-f0872f3157d2');
@@ -28,7 +29,6 @@ describe('GetEventByIdQueryHandler', () => {
       420,
       true,
       '2019-12-12',
-      false,
       'Summary',
       new ProjectView('bf4a645c-9754-4943-baec-783361c6d814', 'RadioFrance'),
       new TaskView('7fb77f06-2d0b-4758-886a-42bba5445fcd', 'Development')
@@ -58,7 +58,7 @@ describe('GetEventByIdQueryHandler', () => {
       eventRepository.findOneById('eb9e1d9b-dce2-48a9-b64f-f0872f3157d2')
     ).thenResolve(instance(event1));
 
-    when(mealTicketRepository.getCountByDate(date)).thenResolve(0);
+    when(mealTicketRepository.getOneByDate(date)).thenResolve(undefined);
 
     expect(await queryHandler.execute(query)).toMatchObject(expectedResult);
 
@@ -66,7 +66,7 @@ describe('GetEventByIdQueryHandler', () => {
       eventRepository.findOneById('eb9e1d9b-dce2-48a9-b64f-f0872f3157d2')
     ).once();
 
-    verify(mealTicketRepository.getCountByDate(date)).once();
+    verify(mealTicketRepository.getOneByDate(date)).once();
   });
 
   it('testGetEventNotFound', async () => {
@@ -82,7 +82,7 @@ describe('GetEventByIdQueryHandler', () => {
       eventRepository.findOneById('eb9e1d9b-dce2-48a9-b64f-f0872f3157d2')
     ).thenResolve(null);
 
-    when(mealTicketRepository.getCountByDate(date)).thenResolve(0);
+    when(mealTicketRepository.getOneByDate(date)).thenResolve(undefined);
 
     try {
       await queryHandler.execute(query);
@@ -102,22 +102,27 @@ describe('GetEventByIdQueryHandler', () => {
       instance(eventRepository),
       instance(mealTicketRepository)
     );
+    const date = '2019-12-12';
+    const mealTicketRemovalId = 666;
+
+    const mealTicketRemovalView = new MealTicketRemovalView(
+      date,
+      mealTicketRemovalId
+    );
     const expectedResult = new EventView(
       'eb9e1d9b-dce2-48a9-b64f-f0872f3157d2',
       'mission',
       420,
       true,
       '2019-12-12',
-      true,
       'Summary',
       new ProjectView('bf4a645c-9754-4943-baec-783361c6d814', 'RadioFrance'),
-      new TaskView('7fb77f06-2d0b-4758-886a-42bba5445fcd', 'Development')
+      new TaskView('7fb77f06-2d0b-4758-886a-42bba5445fcd', 'Development'),
+      mealTicketRemovalView
     );
 
     const task = mock(Task);
     const project = mock(Project);
-
-    const date = '2019-12-12';
 
     when(project.getId()).thenReturn('bf4a645c-9754-4943-baec-783361c6d814');
     when(project.getName()).thenReturn('RadioFrance');
@@ -142,7 +147,9 @@ describe('GetEventByIdQueryHandler', () => {
 
     when(mealTicketRemoval.getDate()).thenReturn(date);
 
-    when(mealTicketRepository.getCountByDate(date)).thenResolve(1);
+    when(mealTicketRepository.getOneByDate(date)).thenResolve(
+      mealTicketRemovalView
+    );
 
     expect(await queryHandler.execute(query)).toMatchObject(expectedResult);
 
@@ -150,6 +157,6 @@ describe('GetEventByIdQueryHandler', () => {
       eventRepository.findOneById('eb9e1d9b-dce2-48a9-b64f-f0872f3157d2')
     ).once();
 
-    verify(mealTicketRepository.getCountByDate(date)).once();
+    verify(mealTicketRepository.getOneByDate(date)).once();
   });
 });
