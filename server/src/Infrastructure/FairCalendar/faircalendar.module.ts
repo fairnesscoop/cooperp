@@ -25,11 +25,20 @@ import { LeaveRepository } from '../HumanResource/Leave/Repository/LeaveReposito
 import { Leave } from 'src/Domain/HumanResource/Leave/Leave.entity';
 import { CooperativeRepository } from '../Settings/Repository/CooperativeRepository';
 import { Cooperative } from 'src/Domain/Settings/Cooperative.entity';
+import { MealTicketRemovalRepository } from '../HumanResource/MealTicket/Repository/MealTicketRemovalRepository';
+import { MealTicketRemoval } from 'src/Domain/HumanResource/MealTicket/MealTicketRemoval.entity';
 
 @Module({
   imports: [
     BusModule,
-    TypeOrmModule.forFeature([Project, Event, Task, Leave, Cooperative])
+    TypeOrmModule.forFeature([
+      Project,
+      Event,
+      Task,
+      Leave,
+      Cooperative,
+      MealTicketRemoval
+    ])
   ],
   controllers: [
     AddEventsAction,
@@ -44,6 +53,10 @@ import { Cooperative } from 'src/Domain/Settings/Cooperative.entity';
     { provide: 'IEventRepository', useClass: EventRepository },
     { provide: 'ITaskRepository', useClass: TaskRepository },
     { provide: 'ICooperativeRepository', useClass: CooperativeRepository },
+    {
+      provide: 'IMealTicketRemovalRepository',
+      useClass: MealTicketRemovalRepository
+    },
     { provide: 'IDateUtils', useClass: DateUtilsAdapter },
     Date,
     IsMaximumTimeSpentReached,

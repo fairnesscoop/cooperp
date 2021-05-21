@@ -69,6 +69,7 @@ import { DeleteLeaveRequestCommandHandler } from 'src/Application/HumanResource/
 import { DeleteLeaveRequestAction } from './Leave/Action/DeleteLeaveRequestAction';
 import { GetAvailableMealTicketsAction } from './MealTicket/Action/GetAvailableMealTicketsAction';
 import { CountMealTicketPerMonthQueryHandler } from 'src/Application/HumanResource/MealTicket/Query/CountMealTicketPerMonthQueryHandler';
+import { DeleteMealTicketRemovalAction } from './MealTicket/Action/DeleteMealTicketRemovalAction';
 
 @Module({
   imports: [
@@ -106,7 +107,7 @@ import { CountMealTicketPerMonthQueryHandler } from 'src/Application/HumanResour
     CreateMealTicketRemovalAction,
     GetAvailableMealTicketsAction,
     DeleteLeaveRequestAction,
-    CreateMealTicketRemovalAction
+    DeleteMealTicketRemovalAction
   ],
   providers: [
     { provide: 'IUserRepository', useClass: UserRepository },

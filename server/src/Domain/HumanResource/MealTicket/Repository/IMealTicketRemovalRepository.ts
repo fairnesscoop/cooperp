@@ -15,6 +15,5 @@ export interface IMealTicketRemovalRepository {
     date: Date
   ): Promise<MealTicketRemovalSummaryDTO[]>;
 
-  deleteOne(id: number, userId: number): Promise<void>;
+  deleteOne(id: string, user: User): Promise<void>;
 }
-P;

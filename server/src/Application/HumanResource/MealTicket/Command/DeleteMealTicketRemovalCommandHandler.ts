@@ -11,8 +11,8 @@ export class DeleteMealTicketRemovalCommandHandler {
   ) {}
 
   public async execute(command: DeleteMealTicketRemovalCommand): Promise<void> {
-    const { id, userId } = command;
+    const { id, user } = command;
 
-    await this.mealTicketRemovalRepository.deleteOne(id, userId);
+    await this.mealTicketRemovalRepository.deleteOne(id, user);
   }
 }

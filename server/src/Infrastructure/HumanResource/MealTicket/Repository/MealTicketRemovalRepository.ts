@@ -68,12 +68,12 @@ export class MealTicketRemovalRepository
       .getRawOne();
   }
 
-  public async deleteOne(id: number, userId: number): Promise<void> {
+  public async deleteOne(id: string, user: User): Promise<void> {
     await this.repository
       .createQueryBuilder('mealTicketRemoval')
       .delete()
       .where('mealTicketRemoval.id = :id', { id })
-      .andWhere('mealTicketRemoval.userId = :userId', { userId })
+      .andWhere('mealTicketRemoval.userId = :userId', { userId: user.getId() })
       .execute();
   }
 }
