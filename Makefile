@@ -6,16 +6,16 @@ exec = ${compose} exec
 run = ${compose} run
 logs = ${compose} logs -f
 
-install: ## Install API and client
+install: ## Install API and kit
 	cp server/ormconfig.json.dist server/ormconfig.json
 	cp server/.env.dist server/.env
-	cp client/config.js.dist client/config.js
-	docker run -it --rm -v ${PWD}/server:/app -w /app node npm i
-	docker run -it --rm -v ${PWD}/client:/app -w /app node npm i
+	#cp kit/config.js.dist kit/config.js
+	docker run -it --rm -v ${PWD}/server:/app -w /app node:16 npm i
+	docker run -it --rm -v ${PWD}/kit:/app -w /app node:16 npm i
 	make start-container
 	make api-build-dist
 	make database-migrate
-	make watch-tailwind
+	#make watch-tailwind
 stop: ## Stop docker containers
 	${compose} stop
 rm: ## Remove docker containers
@@ -31,17 +31,17 @@ restart: ## Restart containers
 start-container: ## Start docker containers
 	${compose} up -d
 watch-tailwind:
-	${exec} client npm run watch:tailwind
+	${exec} kit npm run watch:tailwind
 build-tailwind: ## Build Tailwind in production mode
-	${exec} client npm run build:tailwind
+	${exec} kit npm run build:tailwind
 test: ## Run test suite
 	${exec} api npm run test
-	${exec} client npm run test-unit
+	${exec} kit npm run test-unit
 test-watch: ## Run test suite
 	${exec} api npm run test:watch
 linter: ## Linter
 	${exec} api npm run lint
-	${exec} client npm run lint	
+	${exec} kit npm run lint	
 format: ## Linter
 	${exec} api npm run format
 api-logs: ## Display API logs
@@ -50,10 +50,10 @@ api-bash: ## Connect to API container
 	${exec} api bash
 api-build-dist: ## Build API dist
 	${exec} api npm run build
-client-logs: ## Display Client logs
-	${logs} client
-client-bash: ## Connect to client container
-	${exec} client bash
+kit-logs: ## Display Kit logs
+	${logs} kit
+kit-bash: ## Connect to kit container
+	${exec} kit bash
 database-migrate: ## Database migrations
 	${exec} api npm run migration:migrate
 database-diff: ## Generate database diff

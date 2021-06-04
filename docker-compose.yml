@@ -18,7 +18,7 @@ services:
       - 'database:/var/lib/postgresql/data'
 
   api:
-    image: node:14.3
+    image: node:16
     working_dir: '/var/www'
     depends_on:
       - database
@@ -27,24 +27,24 @@ services:
       - 'uploads:/var/www/uploads'
     command: npm run start:dev
 
-  client:
-    image: node:14.3
+  kit:
+    image: node:16
     working_dir: '/var/www'
     depends_on:
       - api
     volumes:
-      - './client:/var/www:cached'
+      - './kit:/var/www:cached'
     ports:
       - 5000:5000
       - 10000:10000
-    command: npm run dev
+    command: npm run dev -p 3000 --host 0.0.0.0
 
   nginx:
     image: nginx:latest
     ports:
       - 80:80
     depends_on:
-      - 'client'
+      - 'kit'
       - 'api'
     volumes:
       - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
