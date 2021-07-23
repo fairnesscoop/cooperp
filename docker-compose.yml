@@ -8,6 +8,8 @@ volumes:
 services:
   database:
     image: postgres:11.6
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: docker
       POSTGRES_PASSWORD: docker

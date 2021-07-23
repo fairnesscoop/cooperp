@@ -58,6 +58,7 @@ import { UpdateUserAction } from './User/Action/UpdateUserAction';
 import { GetUserAction } from './User/Action/GetUserAction';
 import { UpdateUserCommandHandler } from 'src/Application/HumanResource/User/Command/UpdateUserCommandHandler';
 import { GetUserAdministrativeByIdQueryHandler } from 'src/Application/HumanResource/User/Query/GetUserAdministrativeByIdQueryHandler';
+import { GetOnLeaveUsersAction } from './Leave/Action/GetOnLeaveUsersAction';
 import { GetLeavesAction } from './Leave/Action/GetLeavesAction';
 import { MealTicketRemoval } from 'src/Domain/HumanResource/MealTicket/MealTicketRemoval.entity';
 import { MealTicketRemovalRepository } from './MealTicket/Repository/MealTicketRemovalRepository';
@@ -69,6 +70,7 @@ import { DeleteLeaveRequestCommandHandler } from 'src/Application/HumanResource/
 import { DeleteLeaveRequestAction } from './Leave/Action/DeleteLeaveRequestAction';
 import { GetAvailableMealTicketsAction } from './MealTicket/Action/GetAvailableMealTicketsAction';
 import { CountMealTicketPerMonthQueryHandler } from 'src/Application/HumanResource/MealTicket/Query/CountMealTicketPerMonthQueryHandler';
+import { GetOnLeaveUsersQueryHandler } from "src/Application/HumanResource/Leave/Query/GetOnLeaveUsersQueryHandler";
 
 @Module({
   imports: [
@@ -89,6 +91,7 @@ import { CountMealTicketPerMonthQueryHandler } from 'src/Application/HumanResour
   controllers: [
     LoginAction,
     CreateUserAction,
+    GetOnLeaveUsersAction,
     GetLeavesAction,
     UpdateUserAction,
     GetMeAction,
@@ -151,6 +154,7 @@ import { CountMealTicketPerMonthQueryHandler } from 'src/Application/HumanResour
     AcceptLeaveRequestCommandHandler,
     AcceptedLeaveRequestEventListener,
     LeaveRequestToLeavesConverter,
+    GetOnLeaveUsersQueryHandler,
     GetLeaveRequestsQueryHandler,
     GetLeaveRequestByIdQueryHandler,
     DoesEventsOrLeaveExistForPeriod,

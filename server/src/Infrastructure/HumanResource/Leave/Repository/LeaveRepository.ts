@@ -30,6 +30,24 @@ export class LeaveRepository implements ILeaveRepository {
       .getMany();
   }
 
+  public async findLeavesForDate(date: string): Promise<Leave[]> {
+    return this.repository
+      .createQueryBuilder('leave')
+      .select([
+        'leave.time',
+        'leave.date',
+        'leaveRequest.type',
+        'user.id',
+        'user.firstName',
+        'user.lastName',
+      ])
+      .andWhere('leave.date = :date', { date })
+      .innerJoin('leave.leaveRequest', 'leaveRequest')
+      .innerJoin('leaveRequest.user', 'user')
+      .orderBy('leave.date', 'ASC')
+      .getMany();
+  }
+
   public async countLeavesByUserAndPeriod(
     user: User,
     startDate: string,

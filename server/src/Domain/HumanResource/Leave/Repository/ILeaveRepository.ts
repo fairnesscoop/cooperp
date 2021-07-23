@@ -4,6 +4,7 @@ import { Leave } from '../Leave.entity';
 export interface ILeaveRepository {
   save(leave: Leave[]): void;
   findMonthlyLeaves(date: string, userId: string): Promise<Leave[]>;
+  findLeavesForDate(date: string): Promise<Leave[]>;
   countLeavesByUserAndPeriod(
     user: User,
     startDate: string,
